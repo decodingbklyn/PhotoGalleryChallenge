@@ -50,3 +50,34 @@
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
   filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
 }
+
+.form__wrapper {
+  background-color: #d2b48c;
+}
+
+.form {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.form__header > p {
+  margin-bottom: 0;
+  color: #282c34;
+  font-weight: 600;
+}
+
+.form > div > label {
+  margin-bottom: 0;
+  color: #282c34;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.form-height, .form-width {
+  height: 4vh;
+  color: #d2b48c ;
+  background-color: #282c34;
+}

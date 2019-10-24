@@ -15,23 +15,9 @@ export default function Gallery(props){
 
     const getPhotos = async () => {
       let res = await photoService.getAll()
-      setPhotos(addPhotoAttrs(res.data))
+      setPhotos(res)
     }
-
-    const addPhotoAttrs = (photos)=> {
-       const list = photos.map( photo =>  {
-        const getDimension = photo.slice(photo.length - 7).split('/')
-        const photoData = {
-          src: photo,
-          greysrc: `${photo}?grayscale`,
-          height: getDimension[0],
-          width: getDimension[1]
-        }
-        return photoData
-      })
-      return list
-    }
-
+    
     const createPhoto = (photo) => {
       return (
         <React.Fragment>
@@ -39,9 +25,8 @@ export default function Gallery(props){
             <img  className="gallery-img" src={(props.isGrey) ? photo.greysrc : photo.src } alt={photo.src}/>
             <div  className="gallery-img__btn-container">
                 { (props.isGrey) ? '' :
-              <button className="gallery-img__btn" onClick={handleClick}>greyscale</button>
-            }
-            
+                  <button className="gallery-img__btn" onClick={handleClick}>greyscale</button>
+                }
             </div>
           </div>
         </React.Fragment>
@@ -50,14 +35,37 @@ export default function Gallery(props){
 
     const handleClick = (e) => e.target.closest('div.gallery-img__container').classList.toggle('greyscale')
     
-    const showItems = () => {
+    const showItems = (photos) => {
       var imgs = []
       if(photos && photos.length > 0){
         for (var i = 0; i < items; i++) {
+          if(!photos[i]) return imgs
           imgs.push(createPhoto(photos[i])) 
         }
         return imgs
       } 
+    }
+
+    const filterPhotos = (dimensions) => {
+      var filtered = []
+        if(photos && photos.length > 0 ){
+           photos.filter( photo => {
+            console.log(dimensions.width, dimensions.height)
+            console.log(photo.width, photo.height)
+              if(parseInt(photo.width) === dimensions.width && parseInt(photo.height) === dimensions.height){
+                console.log(dimensions.width, dimensions.height)
+                filtered.push(photo)
+              } else if (photo.width === dimensions.width) {
+                filtered.push(photo)
+              } else if (photo.height === dimensions.height) {
+                filtered.push(photo)
+              } else {
+                return false
+              }
+            })
+        }
+        console.log(filtered)
+      return filtered
     }
 
     const loadMore = () => {
@@ -81,7 +89,7 @@ export default function Gallery(props){
           useWindow={false}
           className='gallery__container'
         >
-            { showItems() }
+            { props.useFilter ? showItems(filterPhotos(props.dimensions)) : showItems(photos) }
         </InfiniteScroll>
     )
 } 

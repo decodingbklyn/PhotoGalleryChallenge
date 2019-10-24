@@ -7,20 +7,17 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      textFilter: '',
-      isGrey: false
+      filter: false,
+      isGrey: false, 
+      dimensions: {
+        height: '',
+        width: ''
+      }
     }
-    this.handleChange = this.handleChange.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
-    
+    this.handleSelect = this.handleSelect.bind(this)
   }
-  
-  handleChange(e){
-      this.setState({
-        textFilter: e.target.value
-      })
-      console.log(this.state.textFilter)
-    }
 
   handleClick(){
     if(this.state.isGrey === false ){
@@ -32,7 +29,46 @@ class App extends Component {
         isGrey: false
       })
     }
+  }
 
+  handleSelect(e){
+    e.preventDefault()
+    const width = parseInt(document.querySelector('.form-width').value)
+    const height = parseInt(document.querySelector('.form-height').value)
+
+    switch ((width && height) || (width || height)) {
+      case width && height:
+          this.setState({
+            filter: true,
+            dimensions: {
+              width: width, 
+              height: height
+            }
+          })
+          console.log( width, height)
+        break;
+      case height:
+          this.setState({
+            filter: true,
+            dimensions: {
+              height: height
+            }
+          })
+          console.log('height', height )
+        break;
+      case width:
+          this.setState({
+            filter: true,
+            dimensions: {
+              width: width,
+            }
+          })
+          console.log('width', width )
+        break;
+      default: 
+          console.log('Please choose a value')
+        break;
+    }
   }
 
   render(){
@@ -41,9 +77,34 @@ class App extends Component {
         <header className="App-header">
           <h1>Photo Gallery Challenge</h1>
           <button onClick={this.handleClick}>Greyscale All Images</button>
-          <input type='text'onChange={this.handleChange} value={this.state.textFilter}/>
+          <div className="form__wrapper">
+            <div className="form__header">
+              <p>Filter by Dimensions:</p>
+            </div>
+            <form className="form" onSubmit={this.handleSelect}>
+              <div className="form-width__container">
+                <select className="form-width">
+                  <option default>Select a width</option>
+                  <option>100</option>
+                  <option>200</option>
+                  <option>300</option>
+                  <option>400</option>
+                </select>
+              </div>
+              <div className="form-height__container">
+                <select className="form-height">
+                  <option default>Select a height</option>
+                  <option>100</option>
+                  <option>200</option>
+                  <option>300</option>
+                  <option>400</option>
+                </select>
+              </div>
+              <button>Submit</button>
+            </form>
+            </div>
         </header>
-          <Gallery isGrey={this.state.isGrey} />
+          <Gallery isGrey={this.state.isGrey} dimensions={this.state.dimensions} useFilter={this.state.filter}/>
       </div>
     );
   }

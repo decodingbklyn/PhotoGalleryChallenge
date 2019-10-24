@@ -14,11 +14,17 @@ module.exports = (app) => {
             } else if ( response.body.error){
                 console.log('Unable to find any photos')
             } else {
-                let greyPhotos = response.body.split("\r\n").map(element => `${element}?grayscale`)
-                return res.send({
-                    data: response.body.split("\r\n"),
-                    greyData: greyPhotos
+                const photos = response.body.split("\r\n").map( (photo)=> {
+                    const getDimensions = photo.slice(photo.length - 7).split('/')
+                    const data =  {
+                        src: photo,
+                        greysrc: `${photo}?grayscale`, 
+                        width: getDimensions[0], 
+                        height: getDimensions[1]
+                    }
+                    return data
                 })
+                return res.send(photos)
             }
         })
     })
