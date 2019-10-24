@@ -14,7 +14,6 @@ class App extends Component {
         width: ''
       }
     }
-    // this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
   }
@@ -45,7 +44,6 @@ class App extends Component {
               height: height
             }
           })
-          console.log( width, height)
         break;
       case height:
           this.setState({
@@ -54,7 +52,6 @@ class App extends Component {
               height: height
             }
           })
-          console.log('height', height )
         break;
       case width:
           this.setState({
@@ -63,10 +60,11 @@ class App extends Component {
               width: width,
             }
           })
-          console.log('width', width )
         break;
-      default: 
-          console.log('Please choose a value')
+      default:
+          const error_msg =  'Please select a dimension to filter!'
+          const errorContainer = document.createElement('p')
+          document.querySelector('.form').append(error_msg, errorContainer)
         break;
     }
   }

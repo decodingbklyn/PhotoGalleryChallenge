@@ -50,8 +50,6 @@ export default function Gallery(props){
       var filtered = []
         if(photos && photos.length > 0 ){
            photos.filter( photo => {
-            console.log(dimensions.width, dimensions.height)
-            console.log(photo.width, photo.height)
               if(parseInt(photo.width) === dimensions.width && parseInt(photo.height) === dimensions.height){
                 console.log(dimensions.width, dimensions.height)
                 filtered.push(photo)
@@ -64,7 +62,6 @@ export default function Gallery(props){
               }
             })
         }
-        console.log(filtered)
       return filtered
     }
 
