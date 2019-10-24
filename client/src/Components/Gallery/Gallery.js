@@ -36,9 +36,12 @@ export default function Gallery(props){
       return (
         <React.Fragment>
           <div className="gallery-img__container">
-            <img  className="gallery-img" src={(props.isGrey) ? photo.src : photo.greysrc } alt={photo.src}/>
+            <img  className="gallery-img" src={(props.isGrey) ? photo.greysrc : photo.src } alt={photo.src}/>
             <div  className="gallery-img__btn-container">
+                { (props.isGrey) ? '' :
               <button className="gallery-img__btn" onClick={handleClick}>greyscale</button>
+            }
+            
             </div>
           </div>
         </React.Fragment>
@@ -61,7 +64,9 @@ export default function Gallery(props){
       if(items === 50 ) {
         setHasMore(false)
       } else {
+        setTimeout(()=> {
           setItems(items + 10)
+        }, 5000)
       }
     }
 
