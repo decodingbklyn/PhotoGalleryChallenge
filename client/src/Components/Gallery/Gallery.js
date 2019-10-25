@@ -8,14 +8,14 @@ export default function Gallery(props){
     const [hasMoreItems, setHasMore ] = useState(true)
 
     useEffect( ()=> {
-      if(!photos){
-        getPhotos()
-      }
+      	if(!photos){
+        	getPhotos()
+      	}
     })
 
     const getPhotos = async () => {
-      let res = await photoService.getAll()
-      setPhotos(res)
+      	let res = await photoService.getAll()
+      	setPhotos(res)
     }
     
     const createPhoto = (photo) => {
@@ -25,7 +25,7 @@ export default function Gallery(props){
             <img  className="gallery-img" src={(props.isGrey) ? photo.greysrc : photo.src } alt={photo.src}/>
             <div  className="gallery-img__btn-container">
                 { (props.isGrey) ? '' :
-                  <button className="gallery-img__btn" onClick={handleClick}>greyscale</button>
+                	<button className="gallery-img__btn" onClick={handleClick}>greyscale</button>
                 }
             </div>
           </div>
@@ -36,56 +36,59 @@ export default function Gallery(props){
     const handleClick = (e) => e.target.closest('div.gallery-img__container').classList.toggle('greyscale')
     
     const showItems = (photos) => {
-      var imgs = []
-      if(photos && photos.length > 0){
-        for (var i = 0; i < items; i++) {
-          if(!photos[i]) return imgs
-          imgs.push(createPhoto(photos[i])) 
-        }
-        return imgs
-      } 
+      	var imgs = []
+      	if(photos && photos.length > 0){
+			for (var i = 0; i < items; i++) {
+				if(!photos[i]) return imgs
+					imgs.push(createPhoto(photos[i])) 
+				}
+			return imgs
+      	} 
     }
 
     const filterPhotos = (dimensions) => {
       var filtered = []
         if(photos && photos.length > 0 ){
-           photos.filter( photo => {
-              if(parseInt(photo.width) === dimensions.width && parseInt(photo.height) === dimensions.height){
-                filtered.push(photo)
-              } else if (photo.width === dimensions.width) {
-                filtered.push(photo)
-              } else if (photo.height === dimensions.height) {
-                filtered.push(photo)
-              } else {
-                return false
-              }
+           	photos.filter( photo => {
+				const height = parseInt(photo.height)
+				const width = parseInt(photo.width)
+
+				if(width === dimensions.width && height === dimensions.height){
+						filtered.push(photo)
+					} else if (width === dimensions.width) {
+						filtered.push(photo)
+					} else if (height === dimensions.height) {
+						filtered.push(photo)
+					} else {
+						return false
+				}
             })
         }
       return filtered
     }
 
     const loadMore = () => {
-      if(items === 50 ) {
-        setHasMore(false)
-      } else {
-        window.onscroll = function(ev) {
-          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            setItems(items + 10)
-          }
-        }
-      }
+      	if(items === 50 ) {
+        	setHasMore(false)
+			} else {
+				window.onscroll = function(ev) {
+				if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+					setItems(items + 10)
+				}
+			}
+      	}
     }
 
     const loader = <div className='loader' style={{color: 'black'}} key={0}>Loading...</div>
     
     const renderImages = (photos) => {
       if(props.useFilter && !props.reset){
-        return showItems(filterPhotos(props.dimensions))
-      } else if(props.reset && !props.useFilter) {
-        return showItems(photos)
-      } else {
-        return showItems(photos) 
-      }
+        	return showItems(filterPhotos(props.dimensions))
+      	} else if(props.reset && !props.useFilter) {
+        	return showItems(photos)
+      	} else {
+        	return showItems(photos) 
+      	}		
     }
 
 

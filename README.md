@@ -1,5 +1,7 @@
 Photo Gallery Challenge
 
+About: 
+This is a photo gallery app. Built with React Express and Node.JS. 
 
 Before Starting: 
 This App uses the following technologies if they are not on your pc please install:
@@ -13,3 +15,4 @@ Getting Started:
 4. Run npm install in client directory
 5. In terminal enter cd ../ to return to the root directory 
 6. To Start this application locally run: npm run dev (application should open in your default browser shortly after it finishes compiling)
+
