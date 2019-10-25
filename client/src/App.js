@@ -11,6 +11,7 @@ class App extends Component {
       filter: false,
       isGrey: false,
       reset: false,
+      error: false,
       isGreyText: 'Grey All Images', 
       dimensions: {
         height: '',
@@ -45,35 +46,43 @@ class App extends Component {
       case width && height:
           this.setState({
             reset: false,
+            error: false,
             filter: true,
             dimensions: {
               width: width, 
               height: height
             }
           })
+          document.querySelector('.error').style.display = 'none'
         break;
       case height:
           this.setState({
             reset: false,
+            error: false,
             filter: true,
             dimensions: {
               height: height
             }
           })
+          document.querySelector('.error').style.display = 'none'
+
         break;
       case width:
           this.setState({
             reset: false,
+            error: false,
             filter: true,
             dimensions: {
               width: width,
             }
           })
+          document.querySelector('.error').style.display = 'none'
         break;
       default:
-          const error_msg =  'Please select a dimension to apply a filter!'
-          const errorContainer = document.createElement('p')
-          document.querySelector('.form').append(error_msg, errorContainer)
+          this.setState({
+            error: true
+          })
+          document.querySelector('.error').style.display = 'block'
         break;
     }
   }
@@ -135,7 +144,6 @@ class App extends Component {
                   useFilter={this.state.filter}
                   reset={this.state.reset}
                   />
-          {console.log(this.state.reset)}
       </div>
     );
   }

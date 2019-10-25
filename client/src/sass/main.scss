@@ -33,6 +33,7 @@
         position: relative;
         overflow: hidden;
         background-color: #dadada;
+        position: relative;
       }
 
     &-img__container {
@@ -61,8 +62,13 @@
         padding-bottom: 40px;
         display: flex;
         width: 100%;
-        align-items: baseline;
-        justify-content: space-evenly;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+
+        @media screen and (max-width: 980px){
+            padding-bottom: 70px;
+        }
       }
 
     &-input__wrapper {
@@ -70,6 +76,13 @@
         justify-content: space-evenly;
         width: 20%;
         position: relative;
+
+        @media screen and (max-width: 980px) {
+            .button-bird {
+                bottom: -94px;
+                left: -215%;
+            }
+        }
       }
 
     &__header > p {
@@ -108,5 +121,13 @@
 .color-change-btn, .reset-btn {
     @extend .form-height;
   }
-  
-  
+
+.error {
+  position: absolute;
+  left: 50%;
+  color: red;
+  display: none;
+  top: -18px;
+  margin-left: -147.50px;
+  font-weight: 700;
+}

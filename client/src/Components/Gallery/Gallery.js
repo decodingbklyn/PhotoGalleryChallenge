@@ -68,9 +68,11 @@ export default function Gallery(props){
       if(items === 50 ) {
         setHasMore(false)
       } else {
-        setTimeout(()=> {
-          setItems(items + 10)
-        }, 5000)
+        window.onscroll = function(ev) {
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            setItems(items + 10)
+          }
+        }
       }
     }
 
@@ -96,6 +98,7 @@ export default function Gallery(props){
           useWindow={false}
           className='gallery__container'
         >
+            <p className='error'>Please select a dimension to apply a filter!</p>
             { renderImages(photos) }
         </InfiniteScroll>
     )
