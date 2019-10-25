@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Gallery from './Components/Gallery/Gallery'
+import Submit from './Components/SubmitBtn/Submit'
 import './App.css'
 
 
@@ -8,7 +9,9 @@ class App extends Component {
     super(props)
     this.state = {
       filter: false,
-      isGrey: false, 
+      isGrey: false,
+      reset: false,
+      isGreyText: 'Grey All Images', 
       dimensions: {
         height: '',
         width: ''
@@ -16,16 +19,19 @@ class App extends Component {
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
 
   handleClick(){
     if(this.state.isGrey === false ){
       this.setState({
-        isGrey: true
+        isGrey: true, 
+        isGreyText: 'Color All Images'
       })
     } else {
       this.setState({
-        isGrey: false
+        isGrey: false,
+        isGreyText: 'Grey All Images'
       })
     }
   }
@@ -38,6 +44,7 @@ class App extends Component {
     switch ((width && height) || (width || height)) {
       case width && height:
           this.setState({
+            reset: false,
             filter: true,
             dimensions: {
               width: width, 
@@ -47,6 +54,7 @@ class App extends Component {
         break;
       case height:
           this.setState({
+            reset: false,
             filter: true,
             dimensions: {
               height: height
@@ -55,6 +63,7 @@ class App extends Component {
         break;
       case width:
           this.setState({
+            reset: false,
             filter: true,
             dimensions: {
               width: width,
@@ -62,47 +71,71 @@ class App extends Component {
           })
         break;
       default:
-          const error_msg =  'Please select a dimension to filter!'
+          const error_msg =  'Please select a dimension to apply a filter!'
           const errorContainer = document.createElement('p')
           document.querySelector('.form').append(error_msg, errorContainer)
         break;
     }
   }
 
+  handleReset(e){
+    e.preventDefault()
+    if(!this.state.reset){
+      this.setState({
+        reset: true
+      })      
+    } 
+  }
+ formSelectOptions(){
+   let options = []
+    for(var i = 50; i <= 400; i += 50){
+      options.push(<option>{i}</option>)
+    }
+    return options
+  }
+  
   render(){
     return (
       <div className="App">
         <header className="App-header">
           <h1>Photo Gallery Challenge</h1>
-          <button onClick={this.handleClick}>Greyscale All Images</button>
           <div className="form__wrapper">
-            <div className="form__header">
-              <p>Filter by Dimensions:</p>
-            </div>
             <form className="form" onSubmit={this.handleSelect}>
-              <div className="form-width__container">
-                <select className="form-width">
-                  <option default>Select a width</option>
-                  <option>100</option>
-                  <option>200</option>
-                  <option>300</option>
-                  <option>400</option>
-                </select>
+              <div className="form__header">
+                <p>Filter by Dimensions:</p>
               </div>
-              <div className="form-height__container">
-                <select className="form-height">
-                  <option default>Select a height</option>
-                  <option>100</option>
-                  <option>200</option>
-                  <option>300</option>
-                  <option>400</option>
-                </select>
+              <div className="form-input__wrapper">
+                <div className="form-width__container">
+                  <select className="form-width">
+                    <option default>Select a width</option>
+                    { this.formSelectOptions()  }
+                  </select>
+                </div>
+                <div className="form-height__container">
+                  <select className="form-height">
+                    <option default>Select a height</option>
+                    { this.formSelectOptions()  }
+                  </select>
+                </div>
+                <Submit className='form-submit__btn'/>
               </div>
-              <button>Submit</button>
             </form>
+            <div className='options__container'>
+              <h3 className='options__header' >Options: </h3>
+              <button className='color-change-btn' 
+                      onClick={this.handleClick}>
+                      {this.state.isGreyText}
+              </button>
+              <button className='reset-btn' onClick={this.handleReset} value='reset'>Reset</button>
             </div>
+          </div>
         </header>
-          <Gallery isGrey={this.state.isGrey} dimensions={this.state.dimensions} useFilter={this.state.filter}/>
+          <Gallery isGrey={this.state.isGrey} 
+                  dimensions={this.state.dimensions} 
+                  useFilter={this.state.filter}
+                  reset={this.state.reset}
+                  />
+          {console.log(this.state.reset)}
       </div>
     );
   }

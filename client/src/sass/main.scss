@@ -1,0 +1,112 @@
+@import 'submit.scss';
+
+
+.App {
+    text-align: center;
+
+    &-logo {
+        height: 40vmin;
+      }
+
+    &-header {
+        background-color: #282c34;
+        min-height: 10vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: calc(10px + 2vmin);
+        color: white;
+      }
+}
+
+  
+.gallery {
+    &__container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        margin: auto;
+        padding: 10px 30px;
+        position: relative;
+        overflow: hidden;
+        background-color: #dadada;
+      }
+
+    &-img__container {
+        max-width: 400px;
+        margin: 15px;
+      }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 25px;
+
+    & > div > label {
+        margin-bottom: 0;
+        color: #282c34;
+        font-weight: 600;
+        font-size: 20px;
+      }
+
+    &__wrapper {
+        background-color: #d2b48c;
+        margin: auto;
+        padding-bottom: 40px;
+        display: flex;
+        width: 100%;
+        align-items: baseline;
+        justify-content: space-evenly;
+      }
+
+    &-input__wrapper {
+        display: flex;
+        justify-content: space-evenly;
+        width: 20%;
+        position: relative;
+      }
+
+    &__header > p {
+        margin-bottom: 0;
+        color: #282c34;
+        font-weight: 600;
+      }
+    
+    &-height, &-width {
+        height: 4vh;
+        color: #d2b48c ;
+        background-color: #282c34;
+        border-style: none;
+        margin: 5px;
+      }
+}
+  
+.loader {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -75px;
+}
+  
+.greyscale {
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+  
+.options__header {
+    margin-bottom: 0;
+    color: #282c34;
+    font-weight: 600;  }
+  
+.color-change-btn, .reset-btn {
+    @extend .form-height;
+  }
+  
+  

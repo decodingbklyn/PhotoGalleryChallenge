@@ -51,7 +51,6 @@ export default function Gallery(props){
         if(photos && photos.length > 0 ){
            photos.filter( photo => {
               if(parseInt(photo.width) === dimensions.width && parseInt(photo.height) === dimensions.height){
-                console.log(dimensions.width, dimensions.height)
                 filtered.push(photo)
               } else if (photo.width === dimensions.width) {
                 filtered.push(photo)
@@ -77,6 +76,17 @@ export default function Gallery(props){
 
     const loader = <div className='loader' style={{color: 'black'}} key={0}>Loading...</div>
     
+    const renderImages = (photos) => {
+      if(props.useFilter && !props.reset){
+        return showItems(filterPhotos(props.dimensions))
+      } else if(props.reset && !props.useFilter) {
+        return showItems(photos)
+      } else {
+        return showItems(photos) 
+      }
+    }
+
+
     return (
         <InfiniteScroll
           pageStart={0}
@@ -86,7 +96,7 @@ export default function Gallery(props){
           useWindow={false}
           className='gallery__container'
         >
-            { props.useFilter ? showItems(filterPhotos(props.dimensions)) : showItems(photos) }
+            { renderImages(photos) }
         </InfiniteScroll>
     )
 } 
